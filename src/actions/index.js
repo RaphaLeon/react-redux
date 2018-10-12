@@ -1,4 +1,9 @@
-import { OPEN_MODAL, CLOSE_MODAL, SEARCH_ENTITIES } from '../action-types/index' 
+import { 
+    OPEN_MODAL, 
+    CLOSE_MODAL, 
+    SEARCH_ENTITIES,
+    SEARCH_ASYNC_ENTITIES 
+} from '../action-types/index' 
 
 export function openModal(mediaId) {
     return {
@@ -21,5 +26,13 @@ export function searchEntities(query) {
         payload: {
             query
         }
+    }
+}
+
+export function searchAsyncEntities(query) {
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch(searchEntities(query))
+        }, 5000) 
     }
 }
