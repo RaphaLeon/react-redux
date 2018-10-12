@@ -9,6 +9,8 @@ import { Provider } from 'react-redux';
 import reducer from '../reducers/index'
 import data from '../schemas/index';
 import { Map as map } from 'immutable'; 
+import { logger } from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 /*function logger({getState,  dispatch}) {
     return (next) => {
@@ -22,18 +24,20 @@ import { Map as map } from 'immutable';
     }
 }*/
 
-const logger = ({getState,  dispatch}) => next => action => {
+/*const logger = ({getState,  dispatch}) => next => action => {
     console.log('old state', getState().toJS());
     console.log('action', action);
     const value = next(action);
     console.log('new state', getState().toJS());
     return value;
-}
+}*/
 
 const store = createStore(
     reducer,
     map(),
-    applyMiddleware(logger)
+    composeWithDevTools(
+        applyMiddleware(logger)
+    )
     //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
