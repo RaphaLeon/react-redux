@@ -1,31 +1,16 @@
 import schema from '../schemas/index';
+import { fromJS } from 'immutable';
 
-const initialState = {
+const initialState = fromJS({
     entities: schema.entities,
     categories: schema.result.categories,
-    search: []
-}
+    search: '',
+})
 
 function data (state = initialState, action) {
     switch (action.type) {
         case 'SEARCH_VIDEO': {
-            let results = [];
-            let playLists = [];
-            if(action.payload.query) {
-                state.data.categories.forEach(category => {
-                   category.playlist.forEach(playlist => {
-                        playLists.push(playlist);
-                    });
-                });
-                //console.log(playLists);
-                results = playLists.filter(media => {
-                    return media.author.toUpperCase().includes(action.payload.query.toUpperCase())
-                })
-            }
-            return { 
-                ...state,
-                search: results
-            }
+            return state.set('search', action.payload.query);
         }
         default:
             return state;
