@@ -11,6 +11,9 @@ import Spinner from '../components/spinner';
 import Volume from '../components/volume';
 import FullScreen from '../components/full-screen';
 
+//Redux
+import { connect } from 'react-redux';
+
 class VideoPlayer extends Component {
     state = {
         pause: false,
@@ -92,7 +95,7 @@ class VideoPlayer extends Component {
                 setRef = {this.setRef}
             >
                 <Title 
-                    title = {this.props.title}
+                    title = {this.props.media.get('title')}
                 />
                 <Controls>
                     <PlayPause 
@@ -127,11 +130,17 @@ class VideoPlayer extends Component {
                     handleTimeUpdate = { this.handleTimeUpdate }
                     handleSeeking = { this.handleSeeking }
                     handleSeeked = { this.handleSeeked}
-                    src = { this.props.src }//"http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
+                    src = { this.props.media.get('src') }//"http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
                 />
             </VideoPlayerLayout>
         )
     }
 } 
 
-export default VideoPlayer
+function mapStateToProps(state, props) {
+    return {
+        media: state.get('data').get('entities').get('media').get(props.id)
+    }
+}
+
+export default connect(mapStateToProps)(VideoPlayer);

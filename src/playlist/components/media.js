@@ -23,7 +23,8 @@ class Media extends PureComponent {
 
     //ES7 mode
     handleClick = (event) =>{ 
-        this.props.openModal(this.props);
+        console.log("HERE bitches!");
+        this.props.openModal(this.props.id);
     }
     render() {
         const styles = {
